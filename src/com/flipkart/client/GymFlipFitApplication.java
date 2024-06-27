@@ -159,7 +159,6 @@ public class GymFlipFitApplication {
                     }
                     break;
                 case 4 :
-                    //end
                     exitFlag = true;
                     System.out.println("Thank you for using FlipFit <3");
                     break;

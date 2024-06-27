@@ -36,6 +36,7 @@ public class GymFlipFitGymOwnerMenu {
                         displayGyms(email);
                         break;
                     case 3:
+                        System.exit(0);
                         return true;
                 }
             }
