@@ -56,56 +56,121 @@ public class CustomerDAOImplementation implements CustomerDAOInterface {
         return gyms;
     }
 
-    @Override
-    public boolean bookSlot(int gymId, int time,String email) {
-        conn = JDBCConnection.getConnection();
-        Statement statement = null;
-        ResultSet resultSet = null;
+//    @Override
+//    public boolean bookSlot(int gymId, int time,String email) {
+//        conn = JDBCConnection.getConnection();
+//        Statement statement = null;
+//        ResultSet resultSet = null;
+//        PreparedStatement preparedStatement = null;
+//        String insertQuery = "INSERT INTO Booking (userId,status,date,time,slotId,GymId ) VALUES(?,?,?,?,?,?)";
+//
+//        int alreadyBooked = getSeatNumberWithGymIDandSlotId(gymId, time);
+//        int remaining = getSeatNumberWithGymIDandSlotIdFromSlots(gymId, time);
+//        try {
+//            if(remaining <= 0){
+//                System.out.println("No slots available");
+//                throw new SlotsUnavailableException();
+//            }
+//            statement = conn.createStatement();
+////            resultSet = statement.executeQuery(insertQuery);
+//            preparedStatement =  conn.prepareStatement(insertQuery);
+//
+//            // 5. Set values for the placeholders in the prepared statement
+//
+//            preparedStatement.setString(1, email);
+//            preparedStatement.setString(2, "CONFIRMED");
+//            preparedStatement.setInt(3, 11);
+//            preparedStatement.setInt(4, time);
+//            preparedStatement.setInt(5, time);
+//            preparedStatement.setInt(6, gymId);
+//
+//            int rowsInserted = preparedStatement.executeUpdate();
+//            resultSet = preparedStatement.getGeneratedKeys();
+//            if (rowsInserted > 0) {
+//                System.out.println("Record inserted successfully!");
+//                if (resultSet.next()) {
+//                    int bookingId = resultSet.getInt(1);
+//                    System.out.println("Booking ID: " + bookingId);
+//                }
+//            } else {
+//                throw new SlotsUnavailableException();
+////                return false;
+//            }
+//            alterSeatsWithGymIDSlotID(gymId,time,remaining-1);
+//
+//        }catch(SlotsUnavailableException | SQLException ex){
+//            System.out.println("message" + ex.getMessage());
+//
+//        }
+//        return true;
+//    }
+
+    public boolean bookSlot(int gymId, int time, String email) {
+        Connection conn = null;
         PreparedStatement preparedStatement = null;
-        String insertQuery = "INSERT INTO Booking (userId,status,date,time,slotId,GymId ) VALUES(?,?,?,?,?,?)";
+        ResultSet resultSet = null;
+        String insertQuery = "INSERT INTO Booking (userId, status, date, time, slotId, GymId) VALUES (?, ?, ?, ?, ?, ?)";
 
         int alreadyBooked = getSeatNumberWithGymIDandSlotId(gymId, time);
         int remaining = getSeatNumberWithGymIDandSlotIdFromSlots(gymId, time);
+
         try {
-            if(remaining <= 0){
+            conn = JDBCConnection.getConnection();
+
+            // Check if slots are available
+            if (remaining <= 0) {
                 System.out.println("No slots available");
                 throw new SlotsUnavailableException();
             }
-            statement = conn.createStatement();
-//            resultSet = statement.executeQuery(insertQuery);
-            preparedStatement =  conn.prepareStatement(insertQuery);
 
-            // 5. Set values for the placeholders in the prepared statement
+            // Prepare the insert statement
+            preparedStatement = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
 
+            // Set values for the placeholders in the prepared statement
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, "CONFIRMED");
-            preparedStatement.setInt(3, 11);
+            preparedStatement.setInt(3, 11); // Assuming date as 11 for demonstration
             preparedStatement.setInt(4, time);
-            preparedStatement.setInt(5, time);
+            preparedStatement.setInt(5, time); // Assuming slotId is the same as time for demonstration
             preparedStatement.setInt(6, gymId);
 
+            // Execute the insert statement
             int rowsInserted = preparedStatement.executeUpdate();
-            resultSet = preparedStatement.getGeneratedKeys();
+
+            // Check if the insert was successful
             if (rowsInserted > 0) {
                 System.out.println("Record inserted successfully!");
+
+                // Retrieve the generated keys (bookingId)
+                resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {
                     int bookingId = resultSet.getInt(1);
                     System.out.println("Booking ID: " + bookingId);
                 }
+
+                // Update remaining seats in the database
+                int updatedRemaining = remaining - 1;
+                alterSeatsWithGymIDSlotID(gymId, time, updatedRemaining);
             } else {
                 throw new SlotsUnavailableException();
-
-//                System.out.println("Failed to insert the record.");
-//                return false;
             }
-            alterSeatsWithGymIDSlotID(gymId,time,remaining-1);
 
-        }catch(SlotsUnavailableException | SQLException ex){
+        } catch (SlotsUnavailableException | SQLException ex) {
             System.out.println(ex.getMessage());
-
+            return false; // Return false if an exception occurs
+        } finally {
+            // Close resources in the finally block to ensure they are always closed
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return true;
+        return true; // Return true if booking and seat update were successful
     }
+
 
     private int getSeatNumberWithGymIDandSlotIdFromSlots(int gymId, int time) {
         conn = JDBCConnection.getConnection();

@@ -4,6 +4,7 @@ import com.flipkart.business.GymOwnerService;
 import com.flipkart.business.CustomerService;
 import com.flipkart.business.CustomerInterface;
 
+import java.util.Random;
 import java.util.Scanner;
 
 import static com.flipkart.constants.ColorConstants.*;
@@ -22,11 +23,12 @@ public class GymFlipFitApplication {
         System.out.println("\n");
         boolean exitFlag = false;
         while(true) {
+            Scanner scanner = new Scanner(System.in);
             System.out.println("Press 1 for Login");
             System.out.println("Press 2 for Registration");
             System.out.println("Press 3 for Update Password");
             System.out.println("Press 4 for Exit");
-            int x = Integer.parseInt(obj.nextLine());
+            int x = scanner.nextInt();
             switch (x) {
                 case 1 :
                     System.out.println("Enter email");
@@ -34,7 +36,7 @@ public class GymFlipFitApplication {
                     System.out.println("Enter password");
                     String password = obj.nextLine();
                     System.out.println("Enter role \n1. Admin\n2. Customer\n3. Gym Owner\n");
-                    int role = obj.nextInt();
+                    int role = scanner.nextInt();
 
                     switch (role) {
                         case 1 :
@@ -87,6 +89,7 @@ public class GymFlipFitApplication {
                                         admin.viewUnverifiedGymOwners();
                                         break;
                                     case 8:
+                                        System.exit(0);
                                         flag = false;
                                         break;
                                 }

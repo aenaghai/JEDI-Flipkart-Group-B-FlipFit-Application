@@ -67,7 +67,7 @@ public class SQLConstants {
      * SQL query to verify gym owners (admin function)
      * Author: Shikha
      */
-    public static final String ADMIN_VERIFY_GYMOWNERS = "UPDATE gym_owner SET status = ? WHERE id = ?";
+    public static final String ADMIN_VERIFY_GYMOWNERS = "UPDATE gym_owner SET status = ? WHERE owner_id = ?";
 
     /**
      * SQL query to view unverified gyms (admin function)

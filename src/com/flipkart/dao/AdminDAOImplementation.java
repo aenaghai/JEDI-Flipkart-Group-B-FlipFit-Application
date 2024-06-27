@@ -56,7 +56,7 @@ public class AdminDAOImplementation implements AdminDAOInterface {
         PreparedStatement preparedStatement = null;
         try {
             conn = JDBCConnection.getConnection();
-            System.out.println("Debug3");
+//            System.out.println("Debug3");
             preparedStatement = conn.prepareStatement(SQLConstants.ADMIN_VIEW_ALL_USERS);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -98,7 +98,7 @@ public class AdminDAOImplementation implements AdminDAOInterface {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("owner_id");
                 String phoneNo = resultSet.getString("phone_number");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
@@ -230,7 +230,7 @@ public class AdminDAOImplementation implements AdminDAOInterface {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("owner_id");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
                 String ph = resultSet.getString("phone_number");

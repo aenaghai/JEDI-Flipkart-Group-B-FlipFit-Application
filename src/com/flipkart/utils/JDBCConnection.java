@@ -26,7 +26,7 @@ public class JDBCConnection {
                     String password = prop.getProperty("password");
                     Class.forName(driver);
                     connection = DriverManager.getConnection(url, user, password);
-                    System.out.println("Connected to database");
+//                    System.out.println("Connected to database");
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (SQLException e) {

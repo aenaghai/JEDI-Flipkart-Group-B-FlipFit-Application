@@ -92,19 +92,10 @@ public class GymFlipFitGymOwnerMenu {
         String phoneNo = obj.nextLine();
         System.out.println("\nNation ID/ Aadhaar Number: ");
         String nationalId = obj.nextLine();
-        if (nationalId.length() != 12) {
-            System.out.println("\nInvalid Adhaar No. Enter a valid adhaar!\n");
-            return;
-        }
         System.out.println("\nGST: ");
         String GST = obj.nextLine();
         System.out.println("\nPAN Details: ");
         String PAN = obj.nextLine();
-        if (PAN.length() != 10) {
-            System.out.println("\nInvalid Pan Card No. Enter a valid Pan Card No!\n");
-            return;
-        }
-
         GymOwner gymOwner = new GymOwner();
         List<Gym> emptyGymList = new ArrayList<>();
         gymOwner.setOwnerEmail(ownerEmail);

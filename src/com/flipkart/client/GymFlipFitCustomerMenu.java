@@ -68,6 +68,7 @@ public class GymFlipFitCustomerMenu {
                         printGyms(gyms2);
                         break;
                     case 6:
+                        System.exit(0);
                         flag = false;
                         break;
                     default:
