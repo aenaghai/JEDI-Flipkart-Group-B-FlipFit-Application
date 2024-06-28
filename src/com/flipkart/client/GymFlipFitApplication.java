@@ -31,12 +31,12 @@ public class GymFlipFitApplication {
             int x = scanner.nextInt();
             switch (x) {
                 case 1 :
+                    System.out.println("Enter role \n1. Admin\n2. Customer\n3. Gym Owner\n");
+                    int role = scanner.nextInt();
                     System.out.println("Enter email");
                     String userId = obj.nextLine();
                     System.out.println("Enter password");
                     String password = obj.nextLine();
-                    System.out.println("Enter role \n1. Admin\n2. Customer\n3. Gym Owner\n");
-                    int role = scanner.nextInt();
 
                     switch (role) {
                         case 1 :
