@@ -6,9 +6,6 @@ import com.flipkart.business.CustomerInterface;
 
 import java.util.Random;
 import java.util.Scanner;
-
-import static com.flipkart.constants.ColorConstants.*;
-
 public class GymFlipFitApplication {
     static GymFlipFitGymOwnerMenu owner = new GymFlipFitGymOwnerMenu();
     static GymFlipFitCustomerMenu customer = new GymFlipFitCustomerMenu();
@@ -43,7 +40,7 @@ public class GymFlipFitApplication {
                             GymFlipFitAdminMenu admin = new GymFlipFitAdminMenu();
 
                             if(!admin.verifyAdminCredentials(userId,password)){
-                                System.out.println(ANSI_YELLOW + "Invalid Credentials"+ANSI_RESET);
+                                System.out.println("\nInvalid Credentials\n");
                                 break;
                             }
 
@@ -100,18 +97,18 @@ public class GymFlipFitApplication {
 
                         case 2 :
                             if(!customer.userLogin(userId,password))
-                                System.out.println(ANSI_YELLOW+"Invalid credentials"+ANSI_RESET);
+                                System.out.println("\nInvalid Credentials\n");
                             break;
                         case 3 :
                             if(!owner.gymOwnerLogin(userId,password)){
-                                System.out.println(ANSI_YELLOW+"Invalid credentials"+ANSI_RESET);
+                                System.out.println("\nInvalid Credentials\n");
                             }
 
                             break;
                         case 4 :
                             break;
                         default:
-                            System.out.println(ANSI_YELLOW+"Invalid Options Selected. Please Try Again:("+ANSI_RESET);
+                            System.out.println("\nInvalid Options Selected. Please Try Again:(\n");
                             break;
 
                     }
@@ -146,14 +143,14 @@ public class GymFlipFitApplication {
                     switch (respectiveRole) {
                         case 2 :
                             if(!customer.validateUser(user,userPassword))
-                                System.out.println(ANSI_YELLOW+"Invalid credentials"+ANSI_RESET);
+                                System.out.println("\nInvalid Credentials\n");
                             else{
                                 userService.updateGymUserPassword(user,userPassword, updatedPassword);
                             }
                             break;
                         case 3 :
                             if(!owner.verifyGymOwner(user,userPassword)){
-                                System.out.println(ANSI_YELLOW+"Invalid credentials"+ANSI_RESET);
+                                System.out.println("\nInvalid Credentials\n");
                             }
                             else{
                                 gymOwnerService.updateGymOwnerPassword(user,userPassword, updatedPassword);
@@ -167,7 +164,7 @@ public class GymFlipFitApplication {
                     System.out.println("Thank you for using FlipFit <3");
                     break;
                 default:
-                    System.out.println(ANSI_YELLOW+"Invalid Options Selected. Please Try Again:( "+ANSI_RESET);
+                    System.out.println("\nInvalid Options Selected. Please Try Again:( \n");
                     break;
                 }
             if(exitFlag)break;

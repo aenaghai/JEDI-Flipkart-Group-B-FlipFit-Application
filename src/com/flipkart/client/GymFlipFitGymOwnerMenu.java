@@ -9,8 +9,6 @@ import com.flipkart.business.GymOwnerService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import static com.flipkart.constants.ColorConstants.*;
 public class GymFlipFitGymOwnerMenu {
 
     GymOwnerInterface gymOwnerService = new GymOwnerService();
