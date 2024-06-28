@@ -5,8 +5,6 @@ import com.flipkart.bean.*;
 import com.flipkart.business.CustomerService;
 
 import java.util.Scanner;
-
-import static com.flipkart.constants.ColorConstants.*;
 public class GymFlipFitCustomerMenu {
     static Scanner obj = new Scanner(System.in);
     CustomerService userServiceOperation = new CustomerService();
@@ -41,9 +39,9 @@ public class GymFlipFitCustomerMenu {
                         int time = Integer.parseInt(obj.nextLine());
 
                         if (bookSlot(gymId, time, username)) {
-                            System.out.println(ANSI_BLUE+ "Booked Successfully"+ANSI_RESET);
+                            System.out.println("\nBooked Successfully\n");
                         } else {
-                            System.out.println(ANSI_YELLOW+ "Booking Unsuccessful"+ ANSI_RESET);
+                            System.out.println("\nBooking Unsuccessful\n");
                         }
                         break;
                     case 3:
@@ -112,7 +110,7 @@ public class GymFlipFitCustomerMenu {
         return userServiceOperation.bookSlots(gymId, time, email);
     }
     public void cancelSlot(int bookingId) {
-        System.out.println(ANSI_BLUE+ "Slot Cancelled"+ ANSI_RESET);
+        System.out.println("\nSlot Cancelled\n");
         userServiceOperation.cancelSlots(bookingId);
     }
 
