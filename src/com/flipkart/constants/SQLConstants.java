@@ -8,6 +8,7 @@ public class SQLConstants {
 
     public static final String GYM_OWNER_VIEW_GYM = "INSERT INTO gyms (gymAddress, location, gymName, status, ownerId) VALUES(?,?,?,?,?)";
 
+    
     public static final String GYM_USER_UPDATE_PASSWORD = "UPDATE User SET password = ? WHERE email = ? AND Password = ?";
 
     public static final String GYM_OWNER_UPDATE_PASSWORD = "UPDATE gym_owner SET password = ? WHERE email = ? AND Password = ?";
