@@ -56,55 +56,6 @@ public class CustomerDAOImplementation implements CustomerDAOInterface {
         return gyms;
     }
 
-//    @Override
-//    public boolean bookSlot(int gymId, int time,String email) {
-//        conn = JDBCConnection.getConnection();
-//        Statement statement = null;
-//        ResultSet resultSet = null;
-//        PreparedStatement preparedStatement = null;
-//        String insertQuery = "INSERT INTO Booking (userId,status,date,time,slotId,GymId ) VALUES(?,?,?,?,?,?)";
-//
-//        int alreadyBooked = getSeatNumberWithGymIDandSlotId(gymId, time);
-//        int remaining = getSeatNumberWithGymIDandSlotIdFromSlots(gymId, time);
-//        try {
-//            if(remaining <= 0){
-//                System.out.println("No slots available");
-//                throw new SlotsUnavailableException();
-//            }
-//            statement = conn.createStatement();
-////            resultSet = statement.executeQuery(insertQuery);
-//            preparedStatement =  conn.prepareStatement(insertQuery);
-//
-//            // 5. Set values for the placeholders in the prepared statement
-//
-//            preparedStatement.setString(1, email);
-//            preparedStatement.setString(2, "CONFIRMED");
-//            preparedStatement.setInt(3, 11);
-//            preparedStatement.setInt(4, time);
-//            preparedStatement.setInt(5, time);
-//            preparedStatement.setInt(6, gymId);
-//
-//            int rowsInserted = preparedStatement.executeUpdate();
-//            resultSet = preparedStatement.getGeneratedKeys();
-//            if (rowsInserted > 0) {
-//                System.out.println("Record inserted successfully!");
-//                if (resultSet.next()) {
-//                    int bookingId = resultSet.getInt(1);
-//                    System.out.println("Booking ID: " + bookingId);
-//                }
-//            } else {
-//                throw new SlotsUnavailableException();
-////                return false;
-//            }
-//            alterSeatsWithGymIDSlotID(gymId,time,remaining-1);
-//
-//        }catch(SlotsUnavailableException | SQLException ex){
-//            System.out.println("message" + ex.getMessage());
-//
-//        }
-//        return true;
-//    }
-
     public boolean bookSlot(int gymId, int time, String email) {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
@@ -123,13 +74,12 @@ public class CustomerDAOImplementation implements CustomerDAOInterface {
                 throw new SlotsUnavailableException();
             }
 
-            // Prepare the insert statement
             preparedStatement = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
 
             // Set values for the placeholders in the prepared statement
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, "CONFIRMED");
-            preparedStatement.setInt(3, 11); // Assuming date as 11 for demonstration
+            preparedStatement.setInt(3, 11);
             preparedStatement.setInt(4, time);
             preparedStatement.setInt(5, time); // Assuming slotId is the same as time for demonstration
             preparedStatement.setInt(6, gymId);
