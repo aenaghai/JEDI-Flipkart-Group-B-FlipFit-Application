@@ -7,6 +7,8 @@ import com.flipkart.bean.User;
 import java.util.List;
 
 public interface CustomerDAOInterface {
+    public void updateGymUserPassword(String email,String password, String updatedPassword);
+    public boolean verifyGymUserPassword(String email, String password);
     List<Gym> getAllGyms();
     boolean bookSlot(int gymId, int time, String email);
     List<Bookings> getAllBookingByUserID(String userId);

@@ -4,6 +4,8 @@ import com.flipkart.bean.Bookings;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slots;
 import com.flipkart.bean.User;
+import com.flipkart.constants.SQLConstants;
+import com.flipkart.exception.InvalidCredentialsException;
 import com.flipkart.exception.RegistrationFailedException;
 import com.flipkart.exception.SlotsUnavailableException;
 import com.flipkart.utils.JDBCConnection;
@@ -17,6 +19,67 @@ public class CustomerDAOImplementation implements CustomerDAOInterface {
 
     JDBCConnection connector ;
     Connection conn;
+
+    @Override
+    public void updateGymUserPassword(String email,String password, String updatedPassword) {
+        conn = JDBCConnection.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            statement = conn.createStatement();
+            preparedStatement = conn.prepareStatement(SQLConstants.GYM_USER_UPDATE_PASSWORD, statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, updatedPassword);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, password);
+
+
+            int rowsInserted = preparedStatement.executeUpdate();
+
+            if (rowsInserted > 0) {
+                System.out.println("Updated Password successfully!");
+            } else {
+                throw new InvalidCredentialsException();
+            }
+
+        }catch(InvalidCredentialsException ex){
+            System.out.println("Gym user " + ex.getMessage());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean verifyGymUserPassword(String email, String password) {
+        conn = JDBCConnection.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            statement = conn.createStatement();
+            preparedStatement = conn.prepareStatement(SQLConstants.GYM_USER_VERIFY_PASSWORD, statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+
+            ResultSet result = preparedStatement.executeQuery();
+
+            if (result.next()) {
+                if(result.getString("status").equals("Unverified")){
+                    System.out.println("Unverified User, please contact admin to verify");
+                    return false;
+                }
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
     @Override
     public List<Gym> getAllGyms() {
         conn = JDBCConnection.getConnection();

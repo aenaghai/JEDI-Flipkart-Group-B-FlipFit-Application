@@ -8,13 +8,10 @@ import com.flipkart.bean.Gym;
 import com.flipkart.bean.User;
 import com.flipkart.dao.CustomerDAOImplementation;
 import com.flipkart.dao.CustomerDAOInterface;
-import com.flipkart.dao.UpdatePasswordDAOImplementation;
-import com.flipkart.dao.UpdatePasswordDAOInterface;
 
 public class CustomerService implements CustomerInterface {
 
 	CustomerDAOInterface customerDAOInterface = new CustomerDAOImplementation();
-	UpdatePasswordDAOInterface updatePasswordInterface = new UpdatePasswordDAOImplementation();
 
 	@Override
 	public boolean verifyGymUserPassword(String email, String password, String updatedPassword) {
@@ -65,7 +62,7 @@ public class CustomerService implements CustomerInterface {
 
 	@Override
 	public void updateGymUserPassword(String email, String password, String updatedPassword) {
-		updatePasswordInterface.updateGymUserPassword(email, password, updatedPassword);
+		customerDAOInterface.updateGymUserPassword(email, password, updatedPassword);
 	}
 
 }

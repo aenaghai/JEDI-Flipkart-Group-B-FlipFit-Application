@@ -6,15 +6,12 @@ import com.flipkart.bean.Gym;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.dao.GymOwnerDAOImplementation;
 import com.flipkart.dao.GymOwnerDaoInterface;
-import com.flipkart.dao.UpdatePasswordDAOImplementation;
-import com.flipkart.dao.UpdatePasswordDAOInterface;
 
 public class GymOwnerService implements GymOwnerInterface {
 
 	HashMap<String, GymOwner> gymOwners = new HashMap();
 	GymOwnerDaoInterface gymOwnerDaoInterface = new GymOwnerDAOImplementation();
 	Scanner obj = new Scanner(System.in);
-	UpdatePasswordDAOInterface updatePasswordInterface = new UpdatePasswordDAOImplementation();
 	int id = 0;
 
 	@Override
@@ -29,7 +26,7 @@ public class GymOwnerService implements GymOwnerInterface {
 
 	@Override
 	public boolean validateLogin(String email, String password) {
-		return updatePasswordInterface.verifyGymUserPassword(email, password);
+		return gymOwnerDaoInterface.verifyGymOwnerPassword(email, password);
 	}
 
 	@Override
@@ -39,12 +36,12 @@ public class GymOwnerService implements GymOwnerInterface {
 
 	@Override
 	public boolean verifyGymOwnerPassword(String email, String password) {
-		return updatePasswordInterface.verifyGymUserPassword(email, password);
+		return gymOwnerDaoInterface.verifyGymOwnerPassword(email, password);
 	}
 
 	@Override
 	public void updateGymOwnerPassword(String email, String password, String updatedPassword) {
-		updatePasswordInterface.updateGymOwnerPassword(email, password, updatedPassword);
+		gymOwnerDaoInterface.updateGymOwnerPassword(email, password, updatedPassword);
 	}
 
 }

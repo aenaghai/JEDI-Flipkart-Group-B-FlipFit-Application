@@ -4,6 +4,7 @@ import com.flipkart.bean.Gym;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Slots;
 import com.flipkart.constants.SQLConstants;
+import com.flipkart.exception.InvalidCredentialsException;
 import com.flipkart.exception.RegistrationFailedException;
 import com.flipkart.exception.SlotInsertionFailedException;
 import com.flipkart.utils.JDBCConnection;
@@ -22,6 +23,73 @@ public class GymOwnerDAOImplementation implements GymOwnerDaoInterface {
     Connection conn;
 
     JDBCConnection connector;
+
+    @Override
+    public void updateGymOwnerPassword(String email,String password, String updatedPassword) {
+        conn = JDBCConnection.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            statement = conn.createStatement();
+            preparedStatement = conn.prepareStatement(SQLConstants.GYM_OWNER_UPDATE_PASSWORD, statement.RETURN_GENERATED_KEYS);
+
+            // 5. Set values for the placeholders in the prepared statement
+
+            preparedStatement.setString(1, updatedPassword);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, password);
+
+
+            int rowsInserted = preparedStatement.executeUpdate();
+
+            if (rowsInserted > 0) {
+                System.out.println("Updated Password successfully!");
+            } else {
+                throw new InvalidCredentialsException();
+//                System.out.println("Failed to Update  the record.");
+//                return;
+            }
+
+        }catch(InvalidCredentialsException ex){
+            System.out.println("Gym Owner" + ex.getMessage());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());;
+        }
+
+    }
+
+    @Override
+    public boolean verifyGymOwnerPassword(String email, String password) {
+        conn = JDBCConnection.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            statement = conn.createStatement();
+            preparedStatement = conn.prepareStatement(SQLConstants.GYM_OWNER_VERIFY_PASSWORD, statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+            ResultSet result = preparedStatement.executeQuery();
+
+            if (result.next()) {
+                if(result.getString("status").equals("Unverified")){
+                    System.out.println("Unverified User, please contact admin to verify");
+                    return false;
+                }
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
     @Override
     public void addGym(Gym gym){
         conn = JDBCConnection.getConnection();
