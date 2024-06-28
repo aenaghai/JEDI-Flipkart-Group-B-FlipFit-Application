@@ -21,10 +21,10 @@ public class GymFlipFitApplication {
         boolean exitFlag = false;
         while(true) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Press 1 for Login");
-            System.out.println("Press 2 for Registration");
-            System.out.println("Press 3 for Update Password");
-            System.out.println("Press 4 for Exit");
+            System.out.println("1. Login");
+            System.out.println("2. Registration");
+            System.out.println("3. Update Password");
+            System.out.println("4. Exit");
             int x = scanner.nextInt();
             switch (x) {
                 case 1 :
@@ -115,9 +115,9 @@ public class GymFlipFitApplication {
 
                     break;
                 case 2 :
-                    System.out.println("Press 1 to Register as a Customer");
-                    System.out.println("Press 2 to Register as a Gym Owner");
-                    System.out.println("Press 3 to Go Back");
+                    System.out.println("1. Register as a Customer");
+                    System.out.println("2. Register as a Gym Owner");
+                    System.out.println("3. Go Back");
                     int k = Integer.parseInt(obj.nextLine());
                     switch(k){
                         case 1:
