@@ -137,6 +137,7 @@ public class GymFlipFitApplication {
                     String userPassword = obj.nextLine();
                     System.out.println("Enter role \n1. Admin\n2. Customer\n3. Gym Owner\n");
                     int respectiveRole = obj.nextInt();
+                    obj.nextLine();
                     System.out.println("Enter New password");
                     String updatedPassword = obj.nextLine();
 
