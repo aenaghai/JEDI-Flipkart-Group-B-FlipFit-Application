@@ -51,14 +51,15 @@ public class GymFlipFitApplication {
 
                             while(flag) {
 
-                                System.out.println("Press 1 for View all users");
-                                System.out.println("Press 2 for View all Gyms");
-                                System.out.println("Press 3 for View all Gym Owners");
-                                System.out.println("Press 4 for Verify Gym");
-                                System.out.println("Press 5 for Verify GymOwner");
-                                System.out.println("Press 6 for View pending Gyms");
-                                System.out.println("Press 7 for View pending Gym Owners");
-                                System.out.println("Press 8 for Exit");
+                                System.out.println("Select an option:");
+                                System.out.println("1. View all users");
+                                System.out.println("2. View all gyms");
+                                System.out.println("3. View all gym owners");
+                                System.out.println("4. Verify gym");
+                                System.out.println("5. Verify gym owner");
+                                System.out.println("6. View pending gym owners");
+                                System.out.println("7. Exit");
+
 
                                 int k = Integer.parseInt(obj.nextLine());
 
@@ -82,13 +83,13 @@ public class GymFlipFitApplication {
                                         int id2 = Integer.parseInt(obj.nextLine());
                                         admin.verifyGymOwner(id2);
                                         break;
+//                                    case 6:
+//                                        admin.viewUnverifiedGyms();
+                                        //break;
                                     case 6:
-                                        admin.viewUnverifiedGyms();
-                                        break;
-                                    case 7:
                                         admin.viewUnverifiedGymOwners();
                                         break;
-                                    case 8:
+                                    case 7:
                                         System.exit(0);
                                         flag = false;
                                         break;

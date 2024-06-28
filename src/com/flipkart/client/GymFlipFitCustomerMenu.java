@@ -83,17 +83,17 @@ public class GymFlipFitCustomerMenu {
     private void printGyms(List<Gym> y) {
         for (Gym gym : y) {
             System.out.println();
-            System.out.println("Gym name: " + gym.getGymName() + "\nGym ID: " + gym.getGymId() + "\nGym Location: " + gym.getLocation() + "\nGym Address: " + gym.getGymAddress());
-            System.out.println("Slot List");
-            String leftAlignFormat = "| %-15d | %-15d | %-20d |%n";
-            System.out.format("------------------------------------------------------------\n");
-            System.out.format("| Start Time      |   End Time      | Remaining Seats      |\n");
-            System.out.format("------------------------------------------------------------\n");
+            System.out.println("Gym name: " + gym.getGymName() +
+                    "\nGym ID: " + gym.getGymId() +
+                    "\nGym Location: " + gym.getLocation() +
+                    "\nGym Address: " + gym.getGymAddress() +
+                    "\nSlot List:");
 
             for (Slots slot : gym.getSlots()) {
-                System.out.format(leftAlignFormat,slot.getStartTime(),(slot.getStartTime() + 1),slot.getSeatCount());
+                String startTime = String.format("%02d:00", slot.getStartTime());
+                String endTime = String.format("%02d:00", (slot.getStartTime() + 1));
+                System.out.println("Start Time: " + startTime + " | End Time: " + endTime + " | Remaining Seats: " + slot.getSeatCount());
             }
-            System.out.format("------------------------------------------------------------\n");
 
         }
     }
